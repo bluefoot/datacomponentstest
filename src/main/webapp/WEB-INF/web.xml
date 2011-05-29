@@ -50,4 +50,15 @@ limitations under the License.
     <welcome-file>index.html</welcome-file>
     <welcome-file>f/index.xhtml</welcome-file>
   </welcome-file-list>
+  <filter>
+    <filter-name>Pretty Filter</filter-name>
+    <filter-class>com.ocpsoft.pretty.PrettyFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>Pretty Filter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+  </filter-mapping>
 </web-app>
