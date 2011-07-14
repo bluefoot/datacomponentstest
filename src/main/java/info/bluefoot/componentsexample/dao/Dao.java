@@ -16,10 +16,16 @@
 package info.bluefoot.componentsexample.dao;
 
 import java.util.List;
+import java.util.Map;
+
 
 public interface Dao<T> {
     void add(T obj);
     void delete(T obj);
     List<T> findAll(Integer firstResult, Integer pageSize, String sortField, Boolean sortOrder);
-    Integer count();
+    Integer count(Map<String, String> filter);
+    List<T> findAll(Integer firstResult, Integer pageSize, String sortField,
+            Boolean sortOrder, Map<String, String> filter);
+    T findById(Integer id) throws NotFoundException;
+    void update(T obj);
 }
