@@ -29,7 +29,7 @@ limitations under the License.
     <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
     <org.slf4j.version>1.5.10</org.slf4j.version>
     <log4j.log4j.version>1.2.15</log4j.log4j.version>
-    <jsf-version>2.1.1-b04</jsf-version>
+    <jsf-version>2.1.2</jsf-version>
     <javax.servlet.servlet-api.version>2.5</javax.servlet.servlet-api.version>
     <com.ocpsoft.prettyfaces.version>3.2.0</com.ocpsoft.prettyfaces.version>
     <org.hibernate.version>3.6.2.Final</org.hibernate.version>
