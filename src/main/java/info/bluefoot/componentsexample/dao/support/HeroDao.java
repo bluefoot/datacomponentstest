@@ -16,10 +16,12 @@
 package info.bluefoot.componentsexample.dao.support;
 
 import info.bluefoot.componentsexample.dao.Dao;
+import info.bluefoot.componentsexample.dao.NotFoundException;
 import info.bluefoot.componentsexample.model.Hero;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,6 +29,7 @@ import javax.inject.Named;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.context.annotation.Scope;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
@@ -50,6 +53,32 @@ public class HeroDao implements Dao<Hero> {
     @Override
     public List<Hero> findAll(Integer firstResult, Integer pageSize,
             String sortField, Boolean sortOrder) {
+        return findAll(firstResult, pageSize, sortField, sortOrder, null);
+    }
+
+    @Override
+    public Integer count(Map<String, String> filter) {
+        Long result = 0L;
+        DetachedCriteria criteria = DetachedCriteria.forClass(Hero.class)
+                .setProjection(Projections.rowCount());
+        
+        if(filter!=null) {
+            for (String key : filter.keySet()) {
+                criteria.add(Restrictions.ilike(key, filter.get(key)));
+            }
+        }
+
+        List results = ht.findByCriteria(criteria);
+        if (results != null  && results.size() > 0) {
+            result = (Long) results.get(0);
+        }
+        
+        return result.intValue();
+    }
+
+    @Override
+    public List<Hero> findAll(Integer firstResult, Integer pageSize,
+            String sortField, Boolean sortOrder, Map<String, String> filter) {
         List<Hero> result = new ArrayList<Hero>();
         
         DetachedCriteria criteria = DetachedCriteria.forClass(Hero.class);
@@ -60,23 +89,30 @@ public class HeroDao implements Dao<Hero> {
                 criteria.addOrder(Order.desc(sortField));
             }
         }
+        
+        if(filter!=null) {
+            for (String key : filter.keySet()) {
+                criteria.add(Restrictions.ilike(key, filter.get(key)));
+            }
+        }
+        
         result.addAll(ht.findByCriteria(criteria, firstResult, pageSize));
         
         return result;
     }
 
     @Override
-    public Integer count() {
-        Long result = 0L;
-        DetachedCriteria criteria = DetachedCriteria.forClass(Hero.class)
-                .setProjection(Projections.rowCount());
-
-        List results = ht.findByCriteria(criteria);
-        if (results != null  && results.size() > 0) {
-            result = (Long) results.get(0);
+    public Hero findById(Integer id) {
+        Hero hero = ht.get(Hero.class, id);
+        if(hero == null) {
+            throw new NotFoundException("Not found");
         }
-
-        return result.intValue();
+        return hero;
     }
 
+    @Override
+    public void update(Hero obj) {
+        ht.update(obj);
+        ht.flush();
+    }
 }
