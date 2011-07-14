@@ -19,6 +19,7 @@ import info.bluefoot.componentsexample.dao.Dao;
 import info.bluefoot.datamodel.LazyDataModel;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,13 +36,14 @@ public class DaoLazyDataModel<T> extends LazyDataModel<T> {
     private Dao<T> dao;
 
     @Override
-    public Integer count() {
-        return dao.count();
+    public Integer count(Map<String, String> filter) {
+        return dao.count(filter);
     }
 
     @Override
-    public List<T> load(Integer firstResult, Integer pageSize, String sortField, Boolean sortOrder) {
-        return dao.findAll(firstResult, pageSize, sortField, sortOrder);
+    public List<T> load(Integer firstResult, Integer pageSize, String sortField, Boolean sortOrder, Map<String, String> filter) {
+        return dao.findAll(firstResult, pageSize, sortField, sortOrder, filter);
     }
+
 
 }
