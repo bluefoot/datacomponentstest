@@ -3,6 +3,20 @@ a {
   color: #1C4257;
 }
 
+a.editlink {
+   background-color: #EFF6FF;
+   padding:3px 12px;
+   -moz-border-radius:10px;
+   -webkit-border-radius:10px;
+   -moz-box-shadow:0 0 5px #85B2CB;
+   -webkit-box-shadow:0 0 5px #85B2CB;
+}
+
+a.editlink:hover {
+  background-color:#FFFFFF;
+  text-decoration:underline;
+}
+
 /*data table
 =======================================*/
 .data-table,.paginator {

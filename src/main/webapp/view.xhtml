@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- 
+Copyright 2011 http://bluefoot.info
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:data="http://bluefoot.info/taglib/data"
+      xmlns:util="http://java.sun.com/jsf/composite/util">
+      
+<f:metadata>
+  <f:viewParam name="i" value="#{heroBean.currentId}"/>
+</f:metadata>
+
+<h:body>
+    <ui:composition template="/templates/masterlayout.xhtml">
+        <ui:define name="windowTitle">Heroes</ui:define>
+        <ui:define name="content">
+          <h2>#{heroBean.obj != null ? heroBean.obj.name : "Not found"}</h2>
+          <ui:fragment rendered="#{heroBean.obj != null}">
+            <span>from #{heroBean.obj.location}</span> <span>(<h:link outcome="edit" value="edit"><f:param name="i" value="#{heroBean.currentId}" /></h:link>)</span>
+            <div>
+              <h:graphicImage url="#{heroBean.obj.pictureUrl}" alt="#{heroBean.obj.name}'s image" />
+            </div>
+          </ui:fragment>
+          <ui:fragment rendered="#{heroBean.obj == null}">
+          <p>
+          We couldn't find the object you've requested.
+          </p>
+          </ui:fragment>
+          <h:link outcome="index" value="« back" />
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

@@ -15,6 +15,9 @@
  */
 package info.bluefoot.componentsexample.web;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import info.bluefoot.componentsexample.dao.Dao;
 import info.bluefoot.componentsexample.model.Hero;
 import info.bluefoot.datamodel.LazyDataModel;
@@ -22,6 +25,7 @@ import info.bluefoot.datamodel.LazyDataModel;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.validator.GenericValidator;
 import org.springframework.context.annotation.Scope;
 
 @Named
@@ -38,6 +42,20 @@ public class HeroBean extends GenericCrudBean<Hero> {
     @Override
     public Hero newEntity() {
         return new Hero();
+    }
+
+    @Override
+    protected Map<String, String> getSearchFields(Hero searchObj) {
+        Map<String, String> filters = new HashMap<String, String>();
+        if (searchObj != null) {
+            if (!GenericValidator.isBlankOrNull(searchObj.getName())) {
+                filters.put("name", searchObj.getName());
+            }
+            if (!GenericValidator.isBlankOrNull(searchObj.getLocation())) {
+                filters.put("location", searchObj.getLocation());
+            }
+        }
+        return filters;
     }
 
 }

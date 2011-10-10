@@ -22,28 +22,47 @@ limitations under the License.
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:data="http://bluefoot.info/taglib/data"
       xmlns:util="http://java.sun.com/jsf/composite/util">
+      
 <f:metadata>
   <f:viewParam name="page" value="#{heroBean.page}"/>
   <f:viewParam name="sort" value="#{heroBean.sortField}"/>
   <f:viewParam name="order" value="#{heroBean.sortOrder}"/>
+  
+  <f:viewParam name="name" value="#{heroBean.searchObj.name}"/>
+  <f:viewParam name="location" value="#{heroBean.searchObj.location}"/>
+  
+  <f:event listener="#{heroBean.applyFilters}" type="preRenderView" />
 </f:metadata>
 
 <h:body>
     <ui:composition template="/templates/masterlayout.xhtml">
         <ui:define name="windowTitle">Heroes</ui:define>
         <ui:define name="content">
-            <data:dataNavigator model="#{heroBean.data}" 
+            <h2>Filter</h2>
+            <h:form>
+               <h:outputLabel value="Name" /> 
+               <h:inputText value="#{heroBean.searchObj.name}" /> 
+               
+               <h:outputLabel value="Location" /> 
+               <h:inputText value="#{heroBean.searchObj.location}" /> 
+               
+               <h:commandButton value="GO" action="index?faces-redirect=true&amp;includeViewParams=true"/>
+            </h:form>
+            <h2>Results</h2>
+            <data:dataNavigator id="navigator1" model="#{heroBean.data}" 
               styleClass="paginator"  innerStyleClass="item" />
             <h:form>
                 <h:dataTable value="#{heroBean.data.wrappedData}" var="hero" 
-                  styleClass="data-table" id="datatablebla">
+                  styleClass="data-table" id="datatable">
                     <h:column>
                         <f:facet name="header">
                             <data:dataOrderer model="#{heroBean.data}" field="id" 
                                 styleClass="header-order" ascStyleClass="asc" 
                                 descStyleClass="desc" value="Id" />
                         </f:facet>
-                        #{hero.id}
+                        <h:link styleClass="editlink" title="Click here to open" outcome="view" value="#{hero.id}">
+                          <f:param name="i" value="#{hero.id}" />
+                        </h:link>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
@@ -65,12 +84,15 @@ limitations under the License.
                         <f:facet name="header">
                           <span>Picture</span>
                         </f:facet>
-                        <img src="#{hero.pictureUrl}" alt="#{hero.name}" 
+                        <h:graphicImage url="#{hero.pictureUrl}" alt="#{heroBean.obj.name}'s image"
                           width="100px" />
+                        <h:commandLink value="x" action="#{heroBean.delete(hero)}">
+                          <f:ajax execute="@this" render="@form :msg :navigator1 :navigator2"  onevent="handleDelete"/>
+                        </h:commandLink>
                     </h:column>
                 </h:dataTable>
             </h:form>
-            <data:dataNavigator model="#{heroBean.data}" 
+            <data:dataNavigator id="navigator2" model="#{heroBean.data}" 
               styleClass="paginator"  innerStyleClass="item" />
         </ui:define>
     </ui:composition>

@@ -1,12 +1,27 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.2.0" 
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+<pretty-config xmlns="http://ocpsoft.com/prettyfaces/3.2.0"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xsi:schemaLocation="http://ocpsoft.com/prettyfaces/3.2.0
                                         http://ocpsoft.com/xml/ns/prettyfaces/ocpsoft-pretty-faces-3.2.0.xsd">
 
-  <url-mapping id="heroeslist"> 
-    <pattern value="/heroes/page/#{page : heroBean.page }/#{sort : heroBean.sortField }/#{order : heroBean.sortOrder }" /> 
+<!--
+
+  <url-mapping id="heroeslist">
+    <pattern value="/heroes/page/#{page : heroBean.page }/#{sort : heroBean.sortField }/#{order : heroBean.sortOrder }" />
     <view-id value="/f/index.xhtml" />
   </url-mapping>
+
+  <url-mapping id="heroesview">
+    <pattern value="/hero/#{i : heroBean.obj.id }" />
+    <view-id value="/f/view.xhtml" />
+  </url-mapping>
+
+
+  <url-mapping id="heroesedit">
+    <pattern value="/hero/edit/#{i : heroBean.obj.id }" />
+    <view-id value="/f/edit.xhtml" />
+  </url-mapping>
+
+-->
 
 </pretty-config>

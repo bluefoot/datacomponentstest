@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
 Copyright 2011 http://bluefoot.info
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,6 +50,7 @@ limitations under the License.
     <welcome-file>index.html</welcome-file>
     <welcome-file>f/index.xhtml</welcome-file>
   </welcome-file-list>
+  <!--
   <filter>
     <filter-name>Pretty Filter</filter-name>
     <filter-class>com.ocpsoft.pretty.PrettyFilter</filter-class>
@@ -61,4 +62,5 @@ limitations under the License.
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>ERROR</dispatcher>
   </filter-mapping>
+  -->
 </web-app>
