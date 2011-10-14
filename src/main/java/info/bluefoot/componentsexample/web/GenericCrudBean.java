@@ -82,7 +82,6 @@ public abstract class GenericCrudBean<P> {
      * any view component calls {@link LazyDataModel#getWrappedData()} on
      * {@link #getData()}.
      */
-    @PostConstruct
     public void applyFilters() {
         data.setFilters(getSearchFields(this.searchObj));
     }
