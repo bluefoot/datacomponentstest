@@ -1,12 +1,12 @@
 /*
  * Copyright 2011 http://bluefoot.info
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -39,10 +39,11 @@ public class HeroDao implements Dao<Hero> {
 
     @Inject
     HibernateTemplate ht;
-    
+
     @Override
-    public void add(Hero obj) {
+    public Integer add(Hero obj) {
         ht.save(obj);
+        return obj.getId();
     }
 
     @Override
@@ -61,7 +62,7 @@ public class HeroDao implements Dao<Hero> {
         Long result = 0L;
         DetachedCriteria criteria = DetachedCriteria.forClass(Hero.class)
                 .setProjection(Projections.rowCount());
-        
+
         if(filter!=null) {
             for (String key : filter.keySet()) {
                 criteria.add(Restrictions.ilike(key, filter.get(key)));
@@ -72,7 +73,7 @@ public class HeroDao implements Dao<Hero> {
         if (results != null  && results.size() > 0) {
             result = (Long) results.get(0);
         }
-        
+
         return result.intValue();
     }
 
@@ -80,7 +81,7 @@ public class HeroDao implements Dao<Hero> {
     public List<Hero> findAll(Integer firstResult, Integer pageSize,
             String sortField, Boolean sortOrder, Map<String, String> filter) {
         List<Hero> result = new ArrayList<Hero>();
-        
+
         DetachedCriteria criteria = DetachedCriteria.forClass(Hero.class);
         if(sortField != null) {
             if(sortOrder) {
@@ -89,15 +90,15 @@ public class HeroDao implements Dao<Hero> {
                 criteria.addOrder(Order.desc(sortField));
             }
         }
-        
+
         if(filter!=null) {
             for (String key : filter.keySet()) {
                 criteria.add(Restrictions.ilike(key, filter.get(key)));
             }
         }
-        
+
         result.addAll(ht.findByCriteria(criteria, firstResult, pageSize));
-        
+
         return result;
     }
 

@@ -49,8 +49,17 @@ public abstract class GenericCrudBean<P> {
 
     // ~ Parameters ==========================================================
 
+    /**
+     * The current page that its being displayed. Starts with 1.
+     */
     protected Integer page;
+    /**
+     * Name of the field that its being currently sorted.
+     */
     protected String sortField;
+    /**
+     * Order of the sort.
+     */
     protected String sortOrder;
     /**
      * The current id of the current entity that it's being done something with it.
@@ -204,7 +213,13 @@ public abstract class GenericCrudBean<P> {
         return null;
     }
 
-    // ~ Abstract methods  ====================================================
+    /**
+     * Creates a new entity and redirects to the <tt>view</tt> view
+     */
+    public String create() {
+        Integer returnedIdentifier = dao.add(obj);
+        return "view?faces-redirect=true&i=" + returnedIdentifier;
+    }
 
     /**
      * Deletes the object passed as parameter, by calling {@link Dao#delete(Object)}.
@@ -215,6 +230,8 @@ public abstract class GenericCrudBean<P> {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put(GenericCrudBean.FLASH_MESSAGE_KEY, "Deleted successfully");
         return "index";
     }
+
+    // ~ Abstract methods  ====================================================
 
     /**
      * Creates a new instance of <tt>P</tt>.

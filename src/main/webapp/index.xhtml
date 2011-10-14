@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!-- 
+<!--
 Copyright 2011 http://bluefoot.info
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -22,15 +22,15 @@ limitations under the License.
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:data="http://bluefoot.info/taglib/data"
       xmlns:util="http://java.sun.com/jsf/composite/util">
-      
+
 <f:metadata>
   <f:viewParam name="page" value="#{heroBean.page}"/>
   <f:viewParam name="sort" value="#{heroBean.sortField}"/>
   <f:viewParam name="order" value="#{heroBean.sortOrder}"/>
-  
+
   <f:viewParam name="name" value="#{heroBean.searchObj.name}"/>
   <f:viewParam name="location" value="#{heroBean.searchObj.location}"/>
-  
+
   <f:event listener="#{heroBean.applyFilters}" type="preRenderView" />
 </f:metadata>
 
@@ -40,24 +40,24 @@ limitations under the License.
         <ui:define name="content">
             <h2>Filter</h2>
             <h:form>
-               <h:outputLabel value="Name" /> 
-               <h:inputText value="#{heroBean.searchObj.name}" /> 
-               
-               <h:outputLabel value="Location" /> 
-               <h:inputText value="#{heroBean.searchObj.location}" /> 
-               
+               <h:outputLabel value="Name" />
+               <h:inputText value="#{heroBean.searchObj.name}" />
+
+               <h:outputLabel value="Location" />
+               <h:inputText value="#{heroBean.searchObj.location}" />
+
                <h:commandButton value="GO" action="index?faces-redirect=true&amp;includeViewParams=true"/>
             </h:form>
-            <h2>Results</h2>
-            <data:dataNavigator id="navigator1" model="#{heroBean.data}" 
+            <h2>Results <h:link style="font-size:0.6em; font-weight:normal;" outcome="create" value="Create a new hero" /></h2>
+            <data:dataNavigator id="navigator1" model="#{heroBean.data}"
               styleClass="paginator"  innerStyleClass="item" />
             <h:form>
-                <h:dataTable value="#{heroBean.data.wrappedData}" var="hero" 
+                <h:dataTable value="#{heroBean.data.wrappedData}" var="hero"
                   styleClass="data-table" id="datatable">
                     <h:column>
                         <f:facet name="header">
-                            <data:dataOrderer model="#{heroBean.data}" field="id" 
-                                styleClass="header-order" ascStyleClass="asc" 
+                            <data:dataOrderer model="#{heroBean.data}" field="id"
+                                styleClass="header-order" ascStyleClass="asc"
                                 descStyleClass="desc" value="Id" />
                         </f:facet>
                         <h:link styleClass="editlink" title="Click here to open" outcome="view" value="#{hero.id}">
@@ -66,16 +66,16 @@ limitations under the License.
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <data:dataOrderer model="#{heroBean.data}" field="name" 
-                                styleClass="header-order" ascStyleClass="asc" 
+                            <data:dataOrderer model="#{heroBean.data}" field="name"
+                                styleClass="header-order" ascStyleClass="asc"
                                 descStyleClass="desc" value="Name" />
                         </f:facet>
                         #{hero.name}
                     </h:column>
                     <h:column>
                         <f:facet name="header">
-                            <data:dataOrderer model="#{heroBean.data}" field="location" 
-                                styleClass="header-order" ascStyleClass="asc" 
+                            <data:dataOrderer model="#{heroBean.data}" field="location"
+                                styleClass="header-order" ascStyleClass="asc"
                                 descStyleClass="desc" value="Location" />
                         </f:facet>
                         #{hero.location}
@@ -92,7 +92,7 @@ limitations under the License.
                     </h:column>
                 </h:dataTable>
             </h:form>
-            <data:dataNavigator id="navigator2" model="#{heroBean.data}" 
+            <data:dataNavigator id="navigator2" model="#{heroBean.data}"
               styleClass="paginator"  innerStyleClass="item" />
         </ui:define>
     </ui:composition>
